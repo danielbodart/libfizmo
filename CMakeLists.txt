@@ -51,26 +51,21 @@ include(ExternalProject)
 
 project(libfizmo
   LANGUAGES C
-  HOMEPAGE_URL https://fizmo.spellbreaker.org
   DESCRIPTION "fizmo interpreter core library"
   VERSION 0.9.0)
 
+# Compile hyphenation patterns into "hyph_patterns.c".
 ExternalProject_Add(hyph_pattern_preparation
   SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/hyph_patterns
   BINARY_DIR ${CMAKE_BINARY_DIR}/hyph_patterns_build
-  CMAKE_ARGS
-  ${GLOBAL_DEFAULT_ARGS}
-  ${GLOBAL_THIRDPARTY_LIB_ARGS}
   BUILD_COMMAND make
   INSTALL_COMMAND cmake -E echo "Skipping install step."
   )
 
+# Compile locale data into "locale_data.c".
 ExternalProject_Add(locale_data_preparation
   SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/locales
   BINARY_DIR ${CMAKE_BINARY_DIR}/loacles_build
-  CMAKE_ARGS
-  ${GLOBAL_DEFAULT_ARGS}
-  ${GLOBAL_THIRDPARTY_LIB_ARGS}
   BUILD_COMMAND make
   INSTALL_COMMAND cmake -E echo "Skipping install step."
   )
