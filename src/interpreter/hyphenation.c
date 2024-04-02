@@ -83,6 +83,7 @@ static int load_patterns() {
     TRACE_LOG("Found requested hyphenation patterns.\n");
     nof_patterns = pattern_data->number_of_patterns;
     patterns = pattern_data->patterns;
+    #ifdef ENABLE_TRACING
     i = 0;
     while (i < nof_patterns) {
       TRACE_LOG("Pattern %d: ", i);
@@ -90,6 +91,7 @@ static int load_patterns() {
       TRACE_LOG("\n");
       i++;
     }
+    #endif // ENABLE_TRACING
     TRACE_LOG("Read %d patterns.\n", nof_patterns);
     return 0;
   }
