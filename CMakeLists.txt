@@ -56,16 +56,16 @@ project(libfizmo
 
 # Compile hyphenation patterns into "hyph_patterns.c".
 ExternalProject_Add(hyph_pattern_preparation
-  SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/hyph_patterns
-  BINARY_DIR ${CMAKE_BINARY_DIR}/hyph_patterns_build
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/hyph_patterns
+  BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/hyph_patterns_build
   BUILD_COMMAND make
   INSTALL_COMMAND cmake -E echo "Skipping install step."
   )
 
 # Compile locale data into "locale_data.c".
 ExternalProject_Add(locale_data_preparation
-  SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/locales
-  BINARY_DIR ${CMAKE_BINARY_DIR}/loacles_build
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/locales
+  BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/loacles_build
   BUILD_COMMAND make
   INSTALL_COMMAND cmake -E echo "Skipping install step."
   )
@@ -129,7 +129,6 @@ if (ENABLE_DEBUGGER)
   add_definitions(-DENABLE_DEBUGGER)
 endif()
 
-option(FIZMO_DIST_VERSION "Set fizmo-dist version" OFF)
 if (FIZMO_DIST_VERSION)
   add_definitions(-DFIZMO_DIST_VERSION=${FIZMO_DIST_VERSION})
 endif()
@@ -177,22 +176,39 @@ set (MyCSources
   src/locales/locale_data.c
   src/locales/locale_data.h)
 
-add_library(fizmo ${MyCSources})
+add_library(${PROJECT_NAME} ${MyCSources})
 
-install(TARGETS fizmo)
-# PUBLIC_HEADER cannot be used for TARGETS fizmo, since it doesn't keep
-# the directory tree and installs all *.h flat into "include/". So:
+## --new:
+if (SUBPROJECT_INSTALL_PREFIX)
+  set(_SUBPROJECT_INSTALL_PREFIX ${SUBPROJECT_INSTALL_PREFIX}/ )
+else()
+  set(_SUBPROJECT_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/ )
+endif()
 
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/" # source directory
-  DESTINATION "include" # target directory
-  FILES_MATCHING # install only matched files
-  PATTERN "*.h" # select header files
-)
+install(TARGETS ${PROJECT_NAME}
+        ARCHIVE
+            DESTINATION lib
+            COMPONENT Libraries
+        PUBLIC_HEADER
+            DESTINATION include/path
+            COMPONENT Headers)
+## --end new
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
-  DESTINATION "lib/pkgconfig")
 
-set(pc_libs_private)
-set(pc_req_private)
-configure_file(src/libfizmo.pc.in libfizmo.pc @ONLY)
+#install(TARGETS fizmo)
+## PUBLIC_HEADER cannot be used for TARGETS fizmo, since it doesn't keep
+## the directory tree and installs all *.h flat into "include/". So:
 
+#install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/" # source directory
+#  DESTINATION "include" # target directory
+#  FILES_MATCHING # install only matched files
+#  PATTERN "*.h" # select header files
+#)
+#
+#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
+#  DESTINATION "lib/pkgconfig")
+#
+#set(pc_libs_private)
+#set(pc_req_private)
+#configure_file(src/libfizmo.pc.in libfizmo.pc @ONLY)
+#
