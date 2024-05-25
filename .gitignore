@@ -20,3 +20,4 @@ missing
 /src/hyph_patterns/en_GB_sorted_dump.txt
 /src/hyph_patterns/fr_FR_sorted_dump.txt
 .DS_Store
+.vscode
