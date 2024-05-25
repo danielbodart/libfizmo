@@ -65,12 +65,12 @@ SET(LIBRARY_VERSION_MAJOR 0)
 SET(LIBRARY_VERSION_STRING 1.0)
 
 set(pattern_setup_SOURCES
-  ${CMAKE_SOURCE_DIR}/../tools/list.c
-  ${CMAKE_SOURCE_DIR}/../tools/z_ucs.c
-  ${CMAKE_SOURCE_DIR}/../tools/filesys_c.c
-  ${CMAKE_SOURCE_DIR}/../tools/filesys.c
-  ${CMAKE_SOURCE_DIR}/hyph_pattern_tools.c
-  ${CMAKE_SOURCE_DIR}/pattern_setup.c)
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/list.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/z_ucs.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys_c.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/hyph_pattern_tools.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/pattern_setup.c)
 
 add_executable(pattern_setup ${pattern_setup_SOURCES})
 
@@ -78,18 +78,18 @@ add_executable(pattern_setup ${pattern_setup_SOURCES})
 add_custom_target(dummy_target ALL
   DEPENDS
     _non_existent_file_forcing_custom_command_execution
-    ${CMAKE_SOURCE_DIR}/hyph_patterns.c
-    ${CMAKE_SOURCE_DIR}/hyph_patterns.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/hyph_patterns.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hyph_patterns.h)
 
-file(GLOB hyph_pattern_sources ${CMAKE_SOURCE_DIR}/??_??.txt)
+file(GLOB hyph_pattern_sources ${CMAKE_CURRENT_SOURCE_DIR}/??_??.txt)
 
 # rebuild "../hyph_patterns.c" on demand
 add_custom_command(
   OUTPUT
     _non_existent_file_forcing_custom_command_execution
-    ${CMAKE_SOURCE_DIR}/hyph_patterns.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hyph_patterns.c
   COMMAND pattern_setup
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   DEPENDS ${hyph_pattern_sources}
   COMMENT "Compiling hyphenation patterns"
   VERBATIM)
