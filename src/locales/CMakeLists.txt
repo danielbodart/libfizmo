@@ -65,11 +65,11 @@ SET(LIBRARY_VERSION_MAJOR 0)
 SET(LIBRARY_VERSION_STRING 1.0)
 
 set(locale_setup_SOURCES
-  ${CMAKE_SOURCE_DIR}/../tools/z_ucs.c
-  ${CMAKE_SOURCE_DIR}/../tools/filesys.c
-  ${CMAKE_SOURCE_DIR}/../tools/filesys_c.c
-  ${CMAKE_SOURCE_DIR}/../tools/list.c
-  ${CMAKE_SOURCE_DIR}/locale_setup.c)
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/z_ucs.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys_c.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/list.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/locale_setup.c)
 
 add_executable(locale_setup ${locale_setup_SOURCES})
 
@@ -77,9 +77,9 @@ add_executable(locale_setup ${locale_setup_SOURCES})
 add_custom_target(dummy_target ALL
   DEPENDS
     _non_existent_file_forcing_custom_command_execution
-    ${CMAKE_SOURCE_DIR}/en_GB.txt
-    ${CMAKE_SOURCE_DIR}/de_DE.txt
-    ${CMAKE_SOURCE_DIR}/fr_FR.txt)
+    ${CMAKE_CURRENT_SOURCE_DIR}/en_GB.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/de_DE.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/fr_FR.txt)
 
 # rebuild "../locale_data.c" on demand
 add_custom_command(
@@ -88,7 +88,7 @@ add_custom_command(
     src/tools/locale_data.c
     src/tools/locale_data.h
   COMMAND locale_setup
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   DEPENDS ${locale_sources}
   COMMENT "Compiling locale data"
   VERBATIM
