@@ -133,7 +133,7 @@ if (FIZMO_DIST_VERSION)
   add_definitions(-DFIZMO_DIST_VERSION=${FIZMO_DIST_VERSION})
 endif()
 
-set (MyCSources
+set (C_FILES
   src/interpreter/babel.c
   src/interpreter/blockbuf.c
   src/interpreter/blorb.c
@@ -176,9 +176,58 @@ set (MyCSources
   src/locales/locale_data.c
   src/locales/locale_data.h)
 
-add_library(${PROJECT_NAME} ${MyCSources})
+set (H_FILES
+  src/blorb_interface/blorb_interface.h
+  src/filesys_interface/filesys_interface.h
+  src/hyph_patterns/hyph_pattern_tools.h
+  src/hyph_patterns/hyph_patterns.h
+  src/interpreter/babel.h
+  src/interpreter/blockbuf.h
+  src/interpreter/blorb.h
+  src/interpreter/cmd_hst.h
+  src/interpreter/config.h
+  src/interpreter/debugger.h
+  src/interpreter/filelist.h
+  src/interpreter/fizmo.h
+  src/interpreter/history.h
+  src/interpreter/hyphenation.h
+  src/interpreter/iff.h
+  src/interpreter/mathemat.h
+  src/interpreter/misc.h
+  src/interpreter/mt19937ar.h
+  src/interpreter/object.h
+  src/interpreter/output.h
+  src/interpreter/property.h
+  src/interpreter/routine.h
+  src/interpreter/savegame.h
+  src/interpreter/sound.h
+  src/interpreter/stack.h
+  src/interpreter/streams.h
+  src/interpreter/table.h
+  src/interpreter/text.h
+  src/interpreter/undo.h
+  src/interpreter/variable.h
+  src/interpreter/wordwrap.h
+  src/interpreter/zpu.h
+  src/interpreter/zscii.h
+  src/locales/libfizmo_locales.h
+  src/locales/locale_data.h
+  src/screen_interface/ScreenInterface.h
+  src/screen_interface/screen_interface.h
+  src/sound_interface/sound_interface.h
+  src/tools/filesys.h
+  src/tools/filesys_c.h
+  src/tools/i18n.h
+  src/tools/list.h
+  src/tools/stringmap.h
+  src/tools/tracelog.h
+  src/tools/types.h
+  src/tools/unused.h
+  src/tools/z_ucs.h)
 
-## --new:
+add_library(${PROJECT_NAME} ${C_FILES})
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${H_FILES}")
+
 if (SUBPROJECT_INSTALL_PREFIX)
   set(_SUBPROJECT_INSTALL_PREFIX ${SUBPROJECT_INSTALL_PREFIX}/ )
 else()
@@ -186,29 +235,13 @@ else()
 endif()
 
 install(TARGETS ${PROJECT_NAME}
-        ARCHIVE
-            DESTINATION lib
-            COMPONENT Libraries
-        PUBLIC_HEADER
-            DESTINATION include/path
-            COMPONENT Headers)
-## --end new
+        ARCHIVE DESTINATION lib COMPONENT Libraries
+        PUBLIC_HEADER DESTINATION include/fizmo COMPONENT Headers)
 
-
-#install(TARGETS fizmo)
-## PUBLIC_HEADER cannot be used for TARGETS fizmo, since it doesn't keep
-## the directory tree and installs all *.h flat into "include/". So:
-
-#install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/" # source directory
-#  DESTINATION "include" # target directory
-#  FILES_MATCHING # install only matched files
-#  PATTERN "*.h" # select header files
-#)
-#
-#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
-#  DESTINATION "lib/pkgconfig")
-#
+configure_file(src/libfizmo.pc.in ${PROJECT_NAME}.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
+  DESTINATION "lib/pkgconfig")
+ 
 #set(pc_libs_private)
 #set(pc_req_private)
-#configure_file(src/libfizmo.pc.in libfizmo.pc @ONLY)
 #
