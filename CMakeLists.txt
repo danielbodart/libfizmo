@@ -234,9 +234,15 @@ else()
   set(_SUBPROJECT_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/ )
 endif()
 
+# Install the static library. It appears "install" cannot handle a
+# hierarchy of files, hence headers are installed in a separate step.
 install(TARGETS ${PROJECT_NAME}
-        ARCHIVE DESTINATION lib COMPONENT Libraries
-        PUBLIC_HEADER DESTINATION include/fizmo COMPONENT Headers)
+  ARCHIVE DESTINATION lib COMPONENT Libraries)
+
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/"  # source directory
+  DESTINATION "include"                         # target directory
+  FILES_MATCHING                                # install only matching files
+  PATTERN "*.h")                                # select header files
 
 configure_file(src/libfizmo.pc.in ${PROJECT_NAME}.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
