@@ -54,6 +54,9 @@ project(libfizmo
   DESCRIPTION "fizmo interpreter core library"
   VERSION 0.9.0)
 
+# Don't prepend libname with "lib".
+set(CMAKE_STATIC_LIBRARY_PREFIX "")
+
 # Compile hyphenation patterns into "hyph_patterns.c".
 ExternalProject_Add(hyph_pattern_preparation
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/hyph_patterns
@@ -70,6 +73,8 @@ ExternalProject_Add(locale_data_preparation
   INSTALL_COMMAND cmake -E echo "Skipping install step."
   )
 
+set(LIBFIZMO_LIBRARIES libfizmo m CACHE INTERNAL "")
+
 option(ENABLE_TRACING "Enable tracing" OFF)
 if (ENABLE_TRACING)
   add_definitions(-DENABLE_TRACING)
@@ -79,7 +84,8 @@ option(ENABLE_BABEL "Enable babel" ON)
 if (ENABLE_BABEL)
   add_definitions(-DENABLE_BABEL)
   find_package(LibXml2 REQUIRED)
-  set(pc_req_public "libxml-2.0")
+  set(pc_req_public "libxml-2.0" CACHE INTERNAL "")
+  set(LIBFIZMO_REQUIRES "libxml-2.0" CACHE INTERNAL "")
 else()
   set(pc_req_public)
 endif()
@@ -176,77 +182,30 @@ set (C_FILES
   src/locales/locale_data.c
   src/locales/locale_data.h)
 
-set (H_FILES
-  src/blorb_interface/blorb_interface.h
-  src/filesys_interface/filesys_interface.h
-  src/hyph_patterns/hyph_pattern_tools.h
-  src/hyph_patterns/hyph_patterns.h
-  src/interpreter/babel.h
-  src/interpreter/blockbuf.h
-  src/interpreter/blorb.h
-  src/interpreter/cmd_hst.h
-  src/interpreter/config.h
-  src/interpreter/debugger.h
-  src/interpreter/filelist.h
-  src/interpreter/fizmo.h
-  src/interpreter/history.h
-  src/interpreter/hyphenation.h
-  src/interpreter/iff.h
-  src/interpreter/mathemat.h
-  src/interpreter/misc.h
-  src/interpreter/mt19937ar.h
-  src/interpreter/object.h
-  src/interpreter/output.h
-  src/interpreter/property.h
-  src/interpreter/routine.h
-  src/interpreter/savegame.h
-  src/interpreter/sound.h
-  src/interpreter/stack.h
-  src/interpreter/streams.h
-  src/interpreter/table.h
-  src/interpreter/text.h
-  src/interpreter/undo.h
-  src/interpreter/variable.h
-  src/interpreter/wordwrap.h
-  src/interpreter/zpu.h
-  src/interpreter/zscii.h
-  src/locales/libfizmo_locales.h
-  src/locales/locale_data.h
-  src/screen_interface/ScreenInterface.h
-  src/screen_interface/screen_interface.h
-  src/sound_interface/sound_interface.h
-  src/tools/filesys.h
-  src/tools/filesys_c.h
-  src/tools/i18n.h
-  src/tools/list.h
-  src/tools/stringmap.h
-  src/tools/tracelog.h
-  src/tools/types.h
-  src/tools/unused.h
-  src/tools/z_ucs.h)
-
 add_library(${PROJECT_NAME} ${C_FILES})
 
-if (SUBPROJECT_INSTALL_PREFIX)
-  set(_SUBPROJECT_INSTALL_PREFIX ${SUBPROJECT_INSTALL_PREFIX}/ )
-else()
-  set(_SUBPROJECT_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/ )
+#if (SUBPROJECT_INSTALL_PREFIX)
+#  set(_SUBPROJECT_INSTALL_PREFIX ${SUBPROJECT_INSTALL_PREFIX}/ )
+#else()
+#  set(_SUBPROJECT_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/ )
+#endif()
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  # Install the static library. It appears "install" cannot handle a
+  # hierarchy of files, hence headers are installed in a separate step.
+  install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib COMPONENT Libraries)
+
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/"  # source directory
+    DESTINATION "include"                         # target directory
+    FILES_MATCHING                                # install only matching files
+    PATTERN "*.h")                                # select header files
+
+  configure_file(src/libfizmo.pc.in ${PROJECT_NAME}.pc @ONLY)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
+    DESTINATION "lib/pkgconfig")
 endif()
 
-# Install the static library. It appears "install" cannot handle a
-# hierarchy of files, hence headers are installed in a separate step.
-install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib COMPONENT Libraries)
-
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/"  # source directory
-  DESTINATION "include"                         # target directory
-  FILES_MATCHING                                # install only matching files
-  PATTERN "*.h")                                # select header files
-
-configure_file(src/libfizmo.pc.in ${PROJECT_NAME}.pc @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc
-  DESTINATION "lib/pkgconfig")
- 
 #set(pc_libs_private)
 #set(pc_req_private)
 #
