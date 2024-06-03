@@ -47,11 +47,16 @@
 #include <stdio.h>
 
 #include "tracelog.h"
-#include "i18n.h"
 #include "types.h"
 #include "z_ucs.h"
 #include "filesys.h"
+
+#ifdef TRACING_WITHOUT_I18N
+#include <stdlib.h>
+#else
+#include "i18n.h"
 #include "../locales/libfizmo_locales.h"
+#endif // TRACING_WITHOUT_I18N
 
 
 z_file *stream_t = NULL;
@@ -69,12 +74,17 @@ void turn_on_trace(void)
   stream_t = fsi->openfile(
       DEFAULT_TRACE_FILE_NAME, FILETYPE_TEXT, FILEACCESS_WRITE);
 
-  if (stream_t == NULL)
+  if (stream_t == NULL) {
+#ifndef TRACING_WITHOUT_I18N
     i18n_translate_and_exit(
         libfizmo_module_name,
         i18n_libfizmo_COULD_NOT_OPEN_TRACE_FILE_P0S,
         -1,
         DEFAULT_TRACE_FILE_NAME);
+#else
+    exit(-1);
+#endif // TRACING_WITHOUT_I18N
+  }
 }
 
 
