@@ -64,11 +64,19 @@ SET(BINARY_NAME hyph_pattern_setup)
 SET(LIBRARY_VERSION_MAJOR 0)
 SET(LIBRARY_VERSION_STRING 1.0)
 
+option(ENABLE_TRACING "Enable tracing" OFF)
+if (ENABLE_TRACING)
+  add_definitions(-DENABLE_TRACING)
+endif()
+
+add_definitions(-DTRACING_WITHOUT_I18N)
+
 set(pattern_setup_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/../tools/list.c
   ${CMAKE_CURRENT_SOURCE_DIR}/../tools/z_ucs.c
   ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys_c.c
   ${CMAKE_CURRENT_SOURCE_DIR}/../tools/filesys.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/../tools/tracelog.c
   ${CMAKE_CURRENT_SOURCE_DIR}/hyph_pattern_tools.c
   ${CMAKE_CURRENT_SOURCE_DIR}/pattern_setup.c)
 

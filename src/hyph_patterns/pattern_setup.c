@@ -45,6 +45,7 @@
 #include "../tools/z_ucs.h"
 #include "../tools/filesys.h"
 #include "../tools/list.h"
+#include "../tools/tracelog.h"
 
 #include "hyph_pattern_tools.h"
 
@@ -310,6 +311,8 @@ int main(int argc, char *argv[]) {
    }
  }
 
+ turn_on_trace();
+
  if ((dfd = opendir(".")) == NULL) {
    fputs("Can't open dir", stderr);
    return 0;
@@ -358,6 +361,7 @@ int main(int argc, char *argv[]) {
  while (i < nof_locale_codes) {
    locale_code = locale_codes[i];
    sprintf(input_filename, "%s.txt", locale_code);
+   TRACE_LOG("Processing \"%s\".\n", input_filename);
    printf("Processing \"%s\".\n", input_filename);
    nof_patterns_by_index[i] = load_patterns(input_filename, output_file, locale_code, dump_sorted_patterns);
    i++;
