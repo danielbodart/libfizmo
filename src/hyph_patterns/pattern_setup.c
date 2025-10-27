@@ -311,7 +311,9 @@ int main(int argc, char *argv[]) {
    }
  }
 
+ #ifdef ENABLE_TRACING
  turn_on_trace();
+ #endif /* ENABLE_TRACING */
 
  if ((dfd = opendir(".")) == NULL) {
    fputs("Can't open dir", stderr);
