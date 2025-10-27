@@ -282,7 +282,7 @@ int set_configuration_value(char *key, char* new_unexpanded_value)
       if (strcmp(key, "locale") == 0)
       {
         TRACE_LOG("Trying to set locale to \"%s\".\n", new_value);
-        if (is_locale_name_available(new_value) == false) {
+        if (is_locale_name_available_in_utf8(new_value) == false) {
           TRACE_LOG("Locale \"%s\" is not available.\n", new_value);
           return_code = -1;
         }

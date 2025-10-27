@@ -748,6 +748,21 @@ z_ucs **get_available_locale_names() {
 }
 
 
+bool is_locale_name_available_in_utf8(char *locale_name) {
+  z_ucs *locale_dup;
+  bool result;
+
+  if ((locale_dup = dup_utf8_string_to_zucs_string(locale_name)) == NULL) {
+    return false;
+  }
+
+  result = is_locale_name_available(locale_dup);
+
+  free(locale_dup);
+  return true;
+}
+
+
 bool is_locale_name_available(z_ucs *locale_name) {
   return list_contains_element(list_of_avaialable_locales_codes, locale_name);
 }
