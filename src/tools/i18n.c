@@ -759,7 +759,7 @@ bool is_locale_name_available_in_utf8(char *locale_name) {
   result = is_locale_name_available(locale_dup);
 
   free(locale_dup);
-  return true;
+  return result;
 }
 
 
