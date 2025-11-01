@@ -1,15 +1,15 @@
 
 
 
-   **Version 0.7.16 — September 1, 2020**
+   **Version 0.9.0 — December 1, 2025**
 
+ - Replaced GNU autoconf/-make build system with CMake.
+ - Adapted management of locale and hyphenation data in such a way that these are now directly compiled into their respective libraries/binaries, thus circumventing the need for handling of external files. This also makes usage of fizmo libraries in an IDE much simpler.
  - Fix throw opcode, make fizmo work for the Dialog sanity checks. Thanks to angstsmurf and Linus Åkesson.
  - Fixed number of stack frames evaluation during restore, addressing another issue with catch/throw. Thanks to angstsmurf for reporting this problem.
+ - Avoid string overflow when composing module's localization file name, refers to issue #27, thanks to Martin Sandsmark.
  - Added parameter to init\_sound to simplify testing.
  - Fixed underscores in markdown files.
- - Replaced obsolete AC\_TRY\_LINK with AC\_LINK\_IFELSE, improve conftest-code.
- - Fixed potential compile errors due to relative paths in autoconf parameters.
- - Avoid string overflow when composing module's localization file name, refers to issue #27, thanks to Martin Sandsmark.
 
 ---
 
