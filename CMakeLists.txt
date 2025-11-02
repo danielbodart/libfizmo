@@ -37,7 +37,7 @@
   ---
 
   This is libfizmo's main buildfile. There are two more in "src/locales"
-  and "src/hyph_patterns", noth of which are invoked by this one. They
+  and "src/hyph_patterns", both of which are invoked by this one. They
   are needed since they'll have to pre-process the hyphentation patterns
   and locales into ".c" source files, so they can be hard-compiled into
   libfizmo, which solves a lot of problem with handling of external files
