@@ -70,6 +70,10 @@ project(libfizmo
 set(CMAKE_STATIC_LIBRARY_PREFIX "")
 
 
+# Create position-independent code.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+
 # Invoke build and run tool for processing of hyphenation patterns into
 # "hyph_patterns.c", so that this file can be used in this build.
 ExternalProject_Add(hyph_pattern_preparation
