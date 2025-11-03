@@ -34,23 +34,6 @@
   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  ---
-
-
-
-  The main libfizmo build process
-
-  Since the "hyph_patterns.c" has to be updated
-
-  file has be pre-processed by the
-  "pattern_setup" binary
-
-  binary, which has to be compiled and run before the main build takes
-  place, compilation and execution of the required "pattern_setup" binary
-  is
-  done via
-
-
 ]]
 
 

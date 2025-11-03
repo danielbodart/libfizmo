@@ -206,8 +206,8 @@ if (FIZMO_DIST_VERSION)
 endif()
 
 
-# Store filenames of all files-to-be-compiled in "C_FILES".
-set (C_FILES
+# Store filenames of all files-to-be-compiled in "c_sources".
+set (c_sources
   src/interpreter/babel.c
   src/interpreter/blockbuf.c
   src/interpreter/blorb.c
@@ -253,7 +253,7 @@ set (C_FILES
 
 # Tell CMake we'd like to create a library named "libfizmo" with the
 # given ".c" files.
-add_library(${PROJECT_NAME} ${C_FILES})
+add_library(${PROJECT_NAME} ${c_sources})
 
 
 # Check whether this is the "top-level" source/project. In case we're
