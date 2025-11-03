@@ -39,7 +39,7 @@
   This is libfizmo's main buildfile. There are two more in "src/locales"
   and "src/hyph_patterns", both of which are invoked by this one. They
   are needed since they'll have to pre-process the hyphentation patterns
-  and locales into ".c" source files, so they can be hard-compiled into
+  and locales into ".c" source files, so they can be "hard-compiled" into
   libfizmo, which solves a lot of problem with handling of external files
   and makes debugging in IDEs much simpler.o
 
@@ -59,6 +59,7 @@ include(ExternalProject)
 
 project(libfizmo
   LANGUAGES C
+  HOMEPAGE_URL https://fizmo.spellbreaker.org
   DESCRIPTION "fizmo interpreter core library"
   VERSION 0.9.0)
 
