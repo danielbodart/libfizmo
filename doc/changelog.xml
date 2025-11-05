@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <changelog>
-  <change version="0.9.0">
+  <change version="0.8.0">
     <datetime day-of-week="Mon" month="12" day="1" hour="0"
       minute="0" second="0" timezone="CET" year="2025"/>
     <logentry>Replaced GNU autoconf/-make build system with CMake.</logentry>

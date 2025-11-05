@@ -1,7 +1,7 @@
 
 
 
-   **Version 0.9.0 — December 1, 2025**
+   **Version 0.8.0 — December 1, 2025**
 
  - Replaced GNU autoconf/-make build system with CMake.
  - Adapted management of locale and hyphenation data in such a way that these are now directly compiled into their respective libraries/binaries, thus circumventing the need for handling of external files. This also makes usage of fizmo libraries in an IDE much simpler.
