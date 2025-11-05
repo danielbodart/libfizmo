@@ -57,6 +57,9 @@ include(ExternalProject)
 #set(CMAKE_BUILD_TYPE Debug)
 
 
+include(FindPkgConfig)
+
+
 project(libfizmo
   LANGUAGES C
   HOMEPAGE_URL https://fizmo.spellbreaker.org
@@ -118,9 +121,9 @@ endif()
 option(ENABLE_BABEL "Enable babel" ON)
 if (ENABLE_BABEL)
   add_definitions(-DENABLE_BABEL)
-  find_package(LibXml2 REQUIRED)
+  pkg_check_modules(LIBXML2 REQUIRED libxml-2.0)
   set(pc_req_public "libxml-2.0" CACHE INTERNAL "")
-  set(LIBFIZMO_REQUIRES "libxml-2.0" CACHE INTERNAL "")
+ #set(LIBFIZMO_REQUIRES "libxml-2.0" CACHE INTERNAL "")   # ?
 else()
   set(pc_req_public)
 endif()
@@ -254,6 +257,9 @@ set (c_sources
 # Tell CMake we'd like to create a library named "libfizmo" with the
 # given ".c" files.
 add_library(${PROJECT_NAME} ${c_sources})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+  ${LIBXML2_INCLUDE_DIRS})
 
 
 # Check whether this is the "top-level" source/project. In case we're
