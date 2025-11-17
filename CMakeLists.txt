@@ -64,7 +64,7 @@ project(libfizmo
   LANGUAGES C
   HOMEPAGE_URL https://fizmo.spellbreaker.org
   DESCRIPTION "fizmo interpreter core library"
-  VERSION 0.9.0)
+  VERSION 0.8.0)
 
 
 # Don't prepend libname with "lib". This is helpful in order to be able
