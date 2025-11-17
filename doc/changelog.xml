@@ -10,11 +10,13 @@
     <logentry>Avoid string overflow when composing module's localization file name, refers to issue #27, thanks to Martin Sandsmark.</logentry>
     <logentry>Added parameter to <tt>init_sound</tt> to simplify testing.</logentry>
     <logentry>Fixed underscores in markdown files.</logentry>
+  </change>
+
+  <!-- These were in the pipeline for 0.7.16 which was never released and later obsoleted by 0.8: -->
     <!--
     <logentry>Replaced obsolete <tt>AC_TRY_LINK</tt> with <tt>AC_LINK_IFELSE</tt>, improve conftest-code.</logentry>
     <logentry>Fixed potential compile errors due to relative paths in autoconf parameters.</logentry>
     -->
-  </change>
 
   <change version="0.7.15">
     <datetime day-of-week="Sun" month="9" day="3" hour="21"
