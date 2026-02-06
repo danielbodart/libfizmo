@@ -1,5 +1,5 @@
-
-/* locale_data.h
+/*
+ * locale_data.h
  *
  * This file is part of fizmo.
  *
@@ -29,14 +29,15 @@
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- *
- * ---
- *
- *
- * This is an empty template file and just a placeholder so that
- * cmake's initial configuration process can complete without errors.
- * It will be replaced by running the "locale_setup" tool.
- *
  */
 
+#ifndef locale_data_h_INCLUDED
+#define locale_data_h_INCLUDED
+
+#ifndef locale_data_c_INCLUDED
+extern locale_module locale_module_libfizmo;
+#endif // locale_data_c_INCLUDED
+
+void init_libfizmo_locales();
+
+#endif // locale_data_h_INCLUDED
