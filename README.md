@@ -1,5 +1,4 @@
-
-
+> **Fork note:** This is a minimal fork of [chrender/libfizmo](https://github.com/chrender/libfizmo) adding WASI (WebAssembly System Interface) platform guards and pre-generated locale data for use with non-CMake build systems. The source changes add `__wasi__` guards alongside existing `__WIN32__` ones — see [PR #3](https://github.com/chrender/libfizmo/pull/3) for the upstream submission.
 
 libfizmo aims to provide a Z-Machine interpreter core library in plain C. The goal is to have an interpreter library with as little dependencies as possible to allow for easy portability. In order to use it stand-alone, you have to invoke the “fizmo\_start” function in “src/interpreter/fizmo.c” with a screen interface. Check fizmo-console for an example.
 
